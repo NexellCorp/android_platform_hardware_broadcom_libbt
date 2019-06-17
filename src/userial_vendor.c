@@ -35,6 +35,7 @@
 #include "bt_vendor_brcm.h"
 #include "userial.h"
 #include "userial_vendor.h"
+#include <unistd.h>
 
 /******************************************************************************
 **  Constants & Macros
@@ -248,7 +249,6 @@ int userial_vendor_open(tUSERIAL_CFG *p_cfg)
     }
 
     tcflush(vnd_userial.fd, TCIOFLUSH);
-    usleep(150000);
 
     tcgetattr(vnd_userial.fd, &vnd_userial.termios);
     cfmakeraw(&vnd_userial.termios);
@@ -322,7 +322,6 @@ void userial_vendor_set_baud(uint8_t userial_baud)
     cfsetospeed(&vnd_userial.termios, tcio_baud);
     cfsetispeed(&vnd_userial.termios, tcio_baud);
     tcsetattr(vnd_userial.fd, TCSANOW, &vnd_userial.termios);
-    usleep(150000);
 }
 
 /*******************************************************************************
