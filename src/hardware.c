@@ -41,9 +41,11 @@
 #include <cutils/properties.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "bt_hci_bdroid.h"
 #include "bt_vendor_brcm.h"
-#include "hci_audio.h"
+#include "esco_parameters.h"
 #include "userial.h"
 #include "userial_vendor.h"
 #include "upio.h"
@@ -1434,13 +1436,11 @@ static int hw_set_SCO_codec(uint16_t codec)
         else
         {
             /* Disable mSBC */
-//          *p++ = (SCO_CODEC_PARAM_SIZE - 2); /* set the parameter size */
             *p++ = SCO_CODEC_PARAM_SIZE; /* set the parameter size */
             UINT8_TO_STREAM(p,0); /* disable */
             UINT16_TO_STREAM(p, SCO_CODEC_NONE);
 
             /* set the totall size of this packet */
-//          p_buf->len = HCI_CMD_PREAMBLE_SIZE + SCO_CODEC_PARAM_SIZE - 2;
             p_buf->len = HCI_CMD_PREAMBLE_SIZE + SCO_CODEC_PARAM_SIZE;
 
             p_set_SCO_codec_cback = hw_set_CVSD_codec_cback;
