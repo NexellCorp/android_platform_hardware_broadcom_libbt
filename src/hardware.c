@@ -1119,7 +1119,6 @@ void hw_config_start(void)
     hw_cfg_cb.f_set_baud_2 = FALSE;
 
     /* Start from sending HCI_RESET */
-
     if (bt_vendor_cbacks)
     {
         p_buf = (HC_BT_HDR *) bt_vendor_cbacks->alloc(BT_HC_HDR_SIZE + \
@@ -1436,12 +1435,11 @@ static int hw_set_SCO_codec(uint16_t codec)
         else
         {
             /* Disable mSBC */
-            *p++ = SCO_CODEC_PARAM_SIZE; /* set the parameter size */
+            *p++ = (SCO_CODEC_PARAM_SIZE - 2); /* set the parameter size */
             UINT8_TO_STREAM(p,0); /* disable */
-            UINT16_TO_STREAM(p, SCO_CODEC_NONE);
 
             /* set the totall size of this packet */
-            p_buf->len = HCI_CMD_PREAMBLE_SIZE + SCO_CODEC_PARAM_SIZE;
+            p_buf->len = HCI_CMD_PREAMBLE_SIZE + SCO_CODEC_PARAM_SIZE - 2;
 
             p_set_SCO_codec_cback = hw_set_CVSD_codec_cback;
             if ((codec != SCO_CODEC_CVSD) && (codec != SCO_CODEC_NONE))
