@@ -160,6 +160,7 @@ typedef struct {
     const uint32_t delay_time;
 } fw_settlement_entry_t;
 
+void hw_sco_config(void);
 
 /******************************************************************************
 **  Externs
@@ -850,6 +851,9 @@ void hw_config_cback(void *p_mem)
                     hw_cfg_cb.fw_fd = -1;
                 }
 
+#if (SCO_CFG_INCLUDED == TRUE)
+                hw_sco_config();
+#endif
                 is_proceeding = TRUE;
                 break;
 
@@ -884,6 +888,9 @@ void hw_config_cback(void *p_mem)
                     hw_cfg_cb.fw_fd = -1;
                 }
 
+#if (SCO_CFG_INCLUDED == TRUE)
+                hw_sco_config();
+#endif
                 is_proceeding = TRUE;
                 break;
 #endif // (USE_CONTROLLER_BDADDR == TRUE)
